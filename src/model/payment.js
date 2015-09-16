@@ -3,28 +3,31 @@
 var Basket = require('./basket');
 var Promotion = require('./promotion');
 var _ = require('lodash');
+var Payment = (function () {
+  function Payment() {
+  }
 
-function payment() {
-}
+  function getSubTotal(list) {
+    var result = 0;
+    _.each(list,function (count, key) {
+      result += count * 8;
+    });
+    return result;
+  }
 
-function getSubTotal(list) {
-  var result = 0;
-  _.each(list,function (count, key) {
-    result += count * 8;
-  });
-  return result;
-}
+  Payment.prototype.getTotalPrice = function (list) {
+    var basket = new Basket();
+    var promotion = new Promotion();
 
-payment.prototype.getTotalPrice = function (list) {
-  var basket = new Basket();
-  var promotion = new Promotion();
+    basket.addBook(list);
+    promotion.grouping(basket.listing);
+    var discountPrice = promotion.getDiscountPrice();
+    var subtotal = getSubTotal(list);
 
-  basket.addBook(list);
-  promotion.grouping(basket.listing);
-  var discountPrice = promotion.getDiscountPrice();
-  var subtotal = getSubTotal(list);
+    return subtotal - discountPrice;
+  }
 
-  return subtotal - discountPrice;
-}
+  return Payment;
+})();
 
-module.exports = payment;
+module.exports = Payment;
