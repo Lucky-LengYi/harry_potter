@@ -12,7 +12,7 @@ Basket.prototype.addBook = function(list) {
 
   if (Array.isArray(list)) {
 
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       that.listing[item] = that.listing[item] || 0;
       that.listing[item]++;
     });

@@ -81,6 +81,4 @@ var Promotion = (function() {
   return Promotion;
 })();
 
-
-
 module.exports = Promotion;
